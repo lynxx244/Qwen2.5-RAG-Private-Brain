@@ -57,7 +57,8 @@ streamlit run web_app.py --server.port 6006
 ## 📊 运行效果展示
 <img width="1906" height="883" alt="68a6c15788df321480c3ad5b382c5681" src="https://github.com/user-attachments/assets/85ae5166-cd43-4159-901c-682ed41f4a8a" />
 
-![Uploading ec7d6927f0b8ff26d5086dee42613490.png…]()
+<img width="1609" height="596" alt="ec7d6927f0b8ff26d5086dee42613490" src="https://github.com/user-attachments/assets/76a6d808-82c4-44ac-83fb-10ca1eabd783" />
+
 
 
 
