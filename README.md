@@ -59,6 +59,7 @@ streamlit run web_app.py --server.port 6006
 ├── modules/
 │   └── create_vector.py # 文档解析与向量化
 ├── vector_store/        # FAISS 索引（.gitignore）
+├── vector_store/        # FAISS 索引（.gitignore）
 ├── web_app.py           # Streamlit 入口
 └── requirements.txt
 ```
