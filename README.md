@@ -1,4 +1,3 @@
-# Qwen2.5-RAG-Private-Brain
 # 🤖 Qwen-RAG-Brain: 基于 Qwen2.5 的进阶 RAG 智能知识库
 
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
@@ -6,7 +5,7 @@
 ![LangChain](https://img.shields.io/badge/LangChain-⚡-green?style=for-the-badge)
 ![FAISS](https://img.shields.io/badge/FAISS-VectorDB-yellow?style=for-the-badge)
 
-本项目是一个基于 **Qwen2.5-7B** 大模型构建的本地工业级 RAG（检索增强生成）系统。相比于传统的初级 RAG，本项目集成了 **BGE-Reranker 精排模型**、**多轮对话状态机（Session State）**以及**复杂 PDF 文档解析**，有效解决了垂直领域问答中的模型幻觉、长文本召回不准与多轮意图遗忘等痛点问题。
+本项目是一个基于 **Qwen2.5-7B** 大模型构建的本地进阶型 RAG 系统 （检索增强生成）系统。相比于传统的初级 RAG，本项目集成了 **BGE-Reranker 精排模型**、**基于 Session State 的多轮对话上下文管理**以及**复杂 PDF 文档解析**，有效解决了垂直领域问答中的模型幻觉、长文本召回不准与多轮意图遗忘等痛点问题。
 
 ---
 
@@ -14,7 +13,7 @@
 
 * **⚡ 双层检索架构 (Two-Stage Retrieval)**：采用 FAISS 与 BGE-Small 进行初筛粗排，并引入 `BGE-Reranker-v2-m3` 进行深度语义重排序，确保大模型的上下文具有最高相关性和忠实度。
 * **🧠 智能对话记忆 (Context-aware Memory)**：基于 Streamlit Session State 构建多轮对话记忆，支持跨轮指代消解（如连问“什么是 QKV”、“它怎么计算”），实现连贯的私人助理体验。
-* **📄 深度文档解析 (Robust Parsing)**：针对技术 PDF 和 Markdown，利用 `RecursiveCharacterTextSplitter` 进行递归分块，并设置科学的 Token 语义重叠（Overlap），完美保护长难句与复杂数学公式。
+* **📄 深度文档解析 (Robust Parsing)**：针对技术 PDF 和 Markdown，利用 `RecursiveCharacterTextSplitter` 进行递归分块，并设置科学的 Token 语义重叠（Overlap），通过设置合理的 chunk_size 与 overlap，降低跨块语义断裂的概率
 * **🛠️ 强健的工程实践 (Engineering Excellence)**：应对底层依赖地狱，通过 **Monkey Patch (猴子补丁)** 动态修复 `transformers` 与 `FlagEmbedding` 之间的 API 冲突（如 Tokenizer 属性缺失）。
 
 ---
@@ -35,8 +34,8 @@
 ### 1. 环境准备
 克隆本项目并安装依赖：
 ```bash
-git clone [https://github.com/你的用户名/Qwen2.5-RAG-Brain.git](https://github.com/你的用户名/Qwen2.5-RAG-Brain.git)
-cd Qwen2.5-RAG-Brain
+git clone https://github.com/lynxx244/Qwen2.5-RAG-Private-Brain.git
+cd Qwen2.5-RAG-Private-Brain
 pip install -r requirements.txt
 ```
 
@@ -67,7 +66,7 @@ streamlit run web_app.py --server.port 6006
 
 ## 📝 开发者札记 (Troubleshooting)
 
-在项目构建过程中，遇到了 `XLMRobertaTokenizer` 丢失 `prepare_for_model` 属性导致 Reranker 崩溃的底层依赖冲突。本项目在主程序中采用了 Monkey Patch（猴子补丁）策略实现版本兼容，保障了系统的稳定运行。
+依赖兼容处理：针对 transformers 与 FlagEmbedding 的版本冲突，通过运行时补丁实现兼容，并在 requirements.txt 中固定了依赖版本。
 
 ```python
 import transformers.utils.import_utils as import_utils
