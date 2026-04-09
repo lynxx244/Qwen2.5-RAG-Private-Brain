@@ -53,7 +53,7 @@ streamlit run web_app.py --server.port 6006
 ```
 
 ---
-### 4.目录结构说明
+## 📁 目录结构 (Project Structure)
 ```
 ├── data/                # 原始文档（PDF/MD）
 ├── modules/
