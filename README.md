@@ -53,6 +53,14 @@ streamlit run web_app.py --server.port 6006
 ```
 
 ---
+### 4.目录结构说明
+├── data/                # 原始文档（PDF/MD）
+├── modules/
+│   ├── create_vector.py # 文档解析与向量化
+│   └── rag_chain.py     # 检索+生成链路
+├── vector_store/        # FAISS 索引（.gitignore）
+├── web_app.py           # Streamlit 入口
+└── requirements.txt
 
 ## 📊 运行效果展示
 
