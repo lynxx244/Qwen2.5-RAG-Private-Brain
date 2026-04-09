@@ -86,6 +86,7 @@ streamlit run web_app.py --server.port 6006
 
 依赖兼容处理：针对 transformers 与 FlagEmbedding 的版本冲突，通过运行时补丁实现兼容，并在 requirements.txt 中固定了依赖版本。
 
+
 ```python
 import transformers.utils.import_utils as import_utils
 from transformers.models.xlm_roberta.tokenization_xlm_roberta import XLMRobertaTokenizer
