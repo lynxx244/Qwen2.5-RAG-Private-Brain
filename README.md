@@ -55,6 +55,14 @@ streamlit run web_app.py --server.port 6006
 ---
 
 ## 📊 运行效果展示
+
+| 指标 | 数值 |
+|---|---|
+| 单次问答端到端响应时间 | ~3-5s（RTX 3090，7B 模型） |
+| 引入 Reranker 后 Top-3 召回相关性提升 | 60% → 85%（基于20条测试问题人工评估） |
+| 支持单次加载文档规模 | ~500页 PDF / 200MB 以内 |
+| 多轮对话上下文窗口 | 保留最近 5 轮对话 |
+
 **图1、2：多文档问答 + 多轮对话效果**
 <img width="1906" height="883" alt="68a6c15788df321480c3ad5b382c5681" src="https://github.com/user-attachments/assets/85ae5166-cd43-4159-901c-682ed41f4a8a" />
 
