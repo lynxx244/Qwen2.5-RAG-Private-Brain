@@ -54,6 +54,7 @@ streamlit run web_app.py --server.port 6006
 
 ---
 ### 4.目录结构说明
+
 ├── data/                # 原始文档（PDF/MD）
 ├── modules/
 │   ├── create_vector.py # 文档解析与向量化
