@@ -55,11 +55,9 @@ streamlit run web_app.py --server.port 6006
 ---
 
 ## 📊 运行效果展示
+<img width="1906" height="883" alt="68a6c15788df321480c3ad5b382c5681" src="https://github.com/user-attachments/assets/85ae5166-cd43-4159-901c-682ed41f4a8a" />
 
 
-<img src="file://C:\Users\lscher\OneDrive\文档\Tencent Files\3168975256\nt_qq\nt_data\Pic\2026-04\Ori\68a6c15788df321480c3ad5b382c5681.png" />
-
-<img src="file://C:\Users\lscher\OneDrive\文档\Tencent Files\3168975256\nt_qq\nt_data\Pic\2026-04\Ori\ec7d6927f0b8ff26d5086dee42613490.png" />
 
 ---
 
@@ -80,4 +78,5 @@ if not hasattr(XLMRobertaTokenizer, "prepare_for_model"):
 
 ---
 **Author**: [lynxx244]
+
 **License**: MIT
