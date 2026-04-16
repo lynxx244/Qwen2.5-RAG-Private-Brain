@@ -2,7 +2,7 @@
 import transformers.utils.import_utils as import_utils
 if not hasattr(import_utils, "is_torch_fx_available"):
     import_utils.is_torch_fx_available = lambda: False 
-
+from modules.rag_engine import QwenRAGEngine
 import streamlit as st
 import torch
 import os
