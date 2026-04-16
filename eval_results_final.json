@@ -1,0 +1,32 @@
+[
+  {
+    "question": "Attention机制中缩放点积（Scaled Dot-Product Attention）为什么要除以维度dk的平方根？",
+    "contexts": [
+      "dk, the dot products grow large in magnitude, pushing the softmax function into regions where it has\nextremely small gradients 4. To counteract this effect, we scale the dot products by 1√dk\n.\n3.2.2 Multi-Head Attention\nInstead of performing a single attention function with dmodel-dimensional keys, values and queries,\nwe found it beneficial to linearly project the queries, keys and values h times with different, learned\nlinear projections to dk, dk and dv dimensions, respectively. On each of these projected versions of",
+      "queries, keys and values we then perform the attention function in parallel, yielding dv-dimensional\n4To illustrate why the dot products get large, assume that the components of q and k are independent random\nvariables with mean 0 and variance 1. Then their dot product, q · k = Pdk\ni=1 qiki, has mean 0 and variance dk.\n4",
+      "of 1√dk\n. Additive attention computes the compatibility function using a feed-forward network with\na single hidden layer. While the two are similar in theoretical complexity, dot-product attention is\nmuch faster and more space-efficient in practice, since it can be implemented using highly optimized\nmatrix multiplication code.\nWhile for small values of dk the two mechanisms perform similarly, additive attention outperforms\ndot product attention without scaling for larger values of dk [3]. We suspect that for large values of"
+    ],
+    "answer": "在注意力机制中的缩放点积（Scaled Dot-Product Attention）中，将点积结果除以维度\\( \\sqrt{d_k} \\)的主要原因是缓解梯度消失或梯度爆炸的问题。具体来说，当\\( d_k \\)增大时，点积的结果可能会变得非常大，这会导致softmax函数在其输出的某些区域具有极其小的梯度。这种情况下，反向传播过程中更新权重的效果会变得非常微弱，从而影响模型的学习效率。\n\n通过将点积结果除以\\( \\sqrt{d_k} \\)，可以使得在较大的\\( d_k \\)值下，点积的结果不至于过大，从而使softmax函数在整个输入范围内保持较为均匀的梯度分布，有助于提高模型训练的稳定性和效果。",
+    "ground_truth": "为了防止点积结果过大进入softmax函数的梯度消失区域，通过除以sqrt(dk)将点积结果拉回到均值为0、方差为1的范围，从而使梯度保持稳定。"
+  },
+  {
+    "question": "Q、K、V这三个向量的英文全称分别是什么？",
+    "contexts": [
+      "query with all keys, divide each by √dk, and apply a softmax function to obtain the weights on the\nvalues.\nIn practice, we compute the attention function on a set of queries simultaneously, packed together\ninto a matrix Q. The keys and values are also packed together into matrices K and V . We compute\nthe matrix of outputs as:\nAttention(Q, K, V ) = softmax( QK T\n√dk\n)V (1)\nThe two most commonly used attention functions are additive attention [2], and dot-product (multi-\nplicative) attention. Dot-product attention is identical to our algorithm, except for the scaling factor\nof 1√dk",
+      "queries, keys and values we then perform the attention function in parallel, yielding dv-dimensional\n4To illustrate why the dot products get large, assume that the components of q and k are independent random\nvariables with mean 0 and variance 1. Then their dot product, q · k = Pdk\ni=1 qiki, has mean 0 and variance dk.\n4",
+      "| | [Qwen3-Omni](https://huggingface.co/Qwen) | 30B | qwen3_omni | | [Qwen2-VL/Qwen2.5-VL/QVQ](https://huggingface.co/Qwen) | 2B/3B/7B/32B/72B | qwen2_vl | | [Qwen3-VL](https://huggingface.co/Qwen) | 2B/4B/8B/30B/32B/235B | qwen3_vl | | [Seed (OSS/Coder)](https://huggingface.co/ByteDance-Seed) | 8B/36B | seed_oss/seed_coder | | [StarCoder 2](https://huggingface.co/bigcode) | 3B/7B/15B | - | | [TeleChat 2-2.5](https://huggingface.co/Tele-AI) | 3B/7B/35B/115B | telechat2 | | [Yuan 2](https://huggingface.co/IEITYuan) | 2B/51B/102B | yuan | > [!NOTE] > 对于所有“基座”（Base）模型，`template` 参数可以是 `default`,"
+    ],
+    "answer": "Q、K、V 这三个向量的英文全称分别是 Query、Key、Value。",
+    "ground_truth": "Q代表Query（查询），K代表Key（键），V代表Value（值）。"
+  },
+  {
+    "question": "在Multi-Head Attention中，h个头的作用是什么？",
+    "contexts": [
+      "output values. These are concatenated and once again projected, resulting in the final values, as\ndepicted in Figure 2.\nMulti-head attention allows the model to jointly attend to information from different representation\nsubspaces at different positions. With a single attention head, averaging inhibits this.\nMultiHead(Q, K, V ) = Concat(head 1, ..., headh)W O\nwhere headi = Attention(QW Q\ni , KW K\ni , V W V\ni )\nWhere the projections are parameter matricesW Q\ni ∈ Rdmodel×dk, W K\ni ∈ Rdmodel×dk, W V\ni ∈ Rdmodel×dv\nand W O ∈ Rhdv×dmodel.",
+      "i ∈ Rdmodel×dk, W V\ni ∈ Rdmodel×dv\nand W O ∈ Rhdv×dmodel.\nIn this work we employ h = 8 parallel attention layers, or heads. For each of these we use\ndk = dv = dmodel/h = 64. Due to the reduced dimension of each head, the total computational cost\nis similar to that of single-head attention with full dimensionality.\n3.2.3 Applications of Attention in our Model\nThe Transformer uses multi-head attention in three different ways:\n• In \"encoder-decoder attention\" layers, the queries come from the previous decoder layer,",
+      "Scaled Dot-Product Attention\n Multi-Head Attention\nFigure 2: (left) Scaled Dot-Product Attention. (right) Multi-Head Attention consists of several\nattention layers running in parallel.\nof the values, where the weight assigned to each value is computed by a compatibility function of the\nquery with the corresponding key.\n3.2.1 Scaled Dot-Product Attention\nWe call our particular attention \"Scaled Dot-Product Attention\" (Figure 2). The input consists of\nqueries and keys of dimension dk, and values of dimension dv. We compute the dot products of the"
+    ],
+    "answer": "在Multi-Head Attention中，h个头的作用是允许模型同时关注不同表示子空间中的信息，并且可以在不同的位置进行关注。每个头通过不同的参数矩阵独立地执行注意力机制，这样可以捕捉到输入的不同方面，从而提高模型的表示能力。由于每个头的维度较低，因此总的计算成本与单头注意力（具有全维度）相当。通过并行运行多个这样的注意力层，模型可以从多个角度同时处理信息，增强了其在处理序列数据时的能力。",
+    "ground_truth": "允许模型在不同表示子空间中共同关注来自不同位置的信息，从而捕捉到更复杂的语义特征。"
+  }
+]
